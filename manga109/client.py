@@ -8,21 +8,21 @@ from .typing import Book
 
 
 class Manga109:
-    def __init__(self, root: str, titles: List[str] = ALL_TITLES):
+    def __init__(self, root: str, annotations: str = "annotations", titles: List[str] = ALL_TITLES):
         """
         Args:
             root (str): Path to the root directory.
             titles (List[str], optional): List of titles to load. Defaults to ALL_TITLES.
         """
         self._root = root
-        self.books = self._read_books(root, titles)
+        self.books = self._read_books(root, annotations, titles)
 
     @staticmethod
-    def _read_books(root: str, titles: List[str]) -> List[Book]:
+    def _read_books(root: str, annotations: str, titles: List[str]) -> List[Book]:
         books: List[Book] = []
 
         for title in titles:
-            with open(os.path.join(root, "annotations", f"{title}.xml")) as f:
+            with open(os.path.join(root, annotations, f"{title}.xml")) as f:
                 content = f.read()
 
             d = xmltodict.parse(content)
